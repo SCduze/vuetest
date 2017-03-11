@@ -55,3 +55,6 @@ VUE NOTE
 * v-cloak 隐藏未编译的Munstache语言，css中设置[v-cloak]{display:none;} 如果直接用html模板，这个非常有用
 
 ## 模板
+* html模板，基于dom的模板，模板都是可解析的html
+* template,字符串模板 可以用<script type="x-template" id=''></script>,可以用直接用字符串拼接这种方式，这时候用es6的语法更好。
+* 模板render函数,createElement(标签名，[数据对象]，子元素)

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue 实例</title>
+    <script src="https://cdn.bootcss.com/vue/2.2.0/vue.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+        .bg{background: yellow;}
+    </style>
+</head>
+<body>
+<div id="app">
+    
+</div>
+<script>
+    var str = '<div>{{message}}<span>123</span></div>'
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            message:'你好',
+            id:'123'
+        },
+        methods:{
+            add:function(){
+                console.log("1")
+            }
+        },
+        render(createElement){
+            return createElement(
+                "ul",
+                {
+                    class:{
+                        bg:true
+                    },
+                    style:{
+                        fontSize:'50px'
+                    },
+                    attrs:{
+                        name:"duze"
+                    },
+                    on:{
+
+                    },
+                    domProps:{
+                        innerHTML:'<li>我是另外一个html了</li>'
+                    }
+                },
+                [
+                    createElement("li",1),
+                    createElement("li",1),
+                    createElement("li",1)
+                ]
+            )
+        }
+    })
+
+</script>
+</body>
+</html>
