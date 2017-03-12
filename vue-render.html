@@ -31,7 +31,7 @@
             }
         },
         render(createElement){
-            return createElement(
+           var obj = createElement(
                 "ul",
                 {
                     class:{
@@ -56,6 +56,8 @@
                     createElement("li",1)
                 ]
             )
+            console.log(obj);
+            return obj;
         }
     })
 
