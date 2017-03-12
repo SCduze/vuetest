@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vuesolt</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>自定义组件</h2>
+        <custom>
+            <div slot="one"></div>
+        </custom>
+    </div>
+    <script>
+        //定制模板  
+        Vue.component("custom",{
+            template:`
+                <div>
+                     <slot name="one">123</slot>
+                </div>
+            `,
+            data(){
+                return {
+                    message:"我是子组件的数据"
+                }
+            }
+        })
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                message:"我是父组件的数据"
+            }
+        });
+    </script>
+</body>
+</html>

@@ -13,15 +13,57 @@
 </head>
 <body>
     <div id="app">
-       
+        {{count}}
+        <my-a v-on:parentcount="aaa" v-bind:counts="count"></my-a>
     </div>
     <script>
-        //全局注册组件
+        Vue.component("my-a",{
+            props:{
+                counts:{
+                    type:Number,
+                    default:function(){
+                        return 20;
+                    },
+                    required:false,
+                    validator:function(value){
+                        return value < 10;
+                    }
+                }
+            },
+            template:`
+                <div>
+                    <button @click="childClick">快来点击我把点击我把</button>
+                    <h2>我是一个组件</h2>
+                    {{childCounts1}}
+                </div>`,
+            data:function(){
+                return {
+                    childCounts:this.counts
+                }
+            },
+            computed:{
+                childCounts1(){
+                    return this.childCounts
+                }
+            },
+            methods:{
+                childClick:function(){
+                    this.childCounts ++ ;
+                    this.$emit("parentcount");
+                },
+
+            }
+        })
        
         var vm = new Vue({
             el:"#app",
             data:{
-
+                count:0
+            },
+            methods:{
+                aaa:function(){
+                    this.count ++;
+                }
             }
         })
     </script>

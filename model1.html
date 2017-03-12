@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>model</title>
+    <style>
+        p,
+        h4 {
+            margin: 0;
+        }
+        
+        .modal {
+            width: 500px;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .modal-content div {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+        
+        .btn {
+            padding: 5px 15px;
+            border: none;
+            outline: none;
+        }
+        
+        .blue {
+            color: #fff;
+            background-color: #39f;
+            border-color: #39f;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/vue/2.2.0/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+       <m-model model-title="提醒" v-on:ok="parentOK" v-on:cancel="parentCancel"></m-model>
+       <m-model>
+           <ul slot="model-content">
+               <li v-for="item of list">{{item}}</li>
+           </ul>
+           <template slot="model-footer">
+               <input class="btn blue" type="button" value="按钮1" />
+               <input class="btn blue" type="button" value="按钮2" />
+               <input class="btn blue" type="button" value="按钮3" />
+           </template>
+       </m-model>
+    </div>
+    <script>
+        var list = [...'有趣的列表'];
+        Vue.component("m-model",{
+            template:`
+                <div class="modal">
+                    <div class="modal-header">
+                        <h4>{{modelTitle}}</h4>
+                    </div>
+                    <div class="modal-content">
+                        <div>
+                            <slot name="model-content">在这里添加内容</slot>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <slot name="model-footer">
+                            <input class="btn blue" type="button" value="确定" @click="okHander" />
+                            <input class="btn" type="button" value="取消" @click="cancelhander" />
+                        </slot>
+                        
+                    </div>
+                </div>
+            `,
+            props:{
+                modelTitle:{
+                    type:String,
+                    default:'这是一个模态框'
+                }
+            },
+            methods:{
+                okHander:function(value){
+                    this.$emit("ok")
+                },
+                cancelhander:function(value){
+                    this.$emit("cancel")
+                }
+            }
+        });
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                list:list
+            },
+            methods:{
+                parentOK:function(){
+                    alert("你点击了确定")
+                },
+                parentCancel:function(){
+                    alert("你点击了取消")
+                }
+            }
+        })
+
+    </script>
+</body>
+    
+</html>
