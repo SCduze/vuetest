@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>访select组件</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+    </style>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div style="float: left;">
+            <h2>自定义的下拉框</h2>
+            <my-select v-bind:listall="list1" btn-value="查询" txt="我不好"></my-select>
+        
+        </div>
+        <div style="float: left;">
+            <h2>自定义下拉框2</h2>
+            <my-select v-bind:listall="list2" btn-value="搜索" txt="你好"></my-select>
+        </div>
+        
+    </div>
+    <script>
+        var obj = {
+            selectShow:false
+        }
+        //全局注册组件
+        Vue.component("mySelect",{
+            template:`<section class="warp">
+                <div class="searchIpt clearFix">
+                    <div class="clearFix">
+                        <input type="text" class="keyWord" v-model="vals"  @click="selectShow = !selectShow"/>
+                        <input type="button" v-bind:value="btnValue">
+                        <span></span>
+                    </div>
+                    <my-list v-on:receive="changeValueHandle" :lists="listall" v-show="selectShow"></my-list>
+                </div>
+            </section> `,
+            props:["btnValue","txt","listall"],//分号的话必须驼峰
+            data:function(){
+                return {
+                    selectShow:false,
+                    vals:''
+                };
+            },
+            methods:{
+                changeValueHandle:function(val){
+                    this.vals = val;
+                }
+            }
+        })
+      Vue.component("my-list",{
+          props:["lists"],
+          methods:{
+            selectValueHandle:function(item){
+                //在子组件中有交互，
+                // 告知父级，改变val值，需要发出一个自定义事件
+                this.$emit("receive",item)
+
+            }
+          },
+          template:`<ul class="list">
+                        <li @click="selectValueHandle(item)" v-for="item of lists">{{item}}</li>
+                    </ul>`
+      })
+      var data = {
+          list1:["北京","上海","杭州"],
+          list2:["17-02-11","17-01-33","17-01-31","17-01-32"]
+      }
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                list1:["北京","上海","杭州"],
+                list2:["17-02-11","17-01-33","17-01-31","17-01-32"]
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>
